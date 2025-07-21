@@ -140,13 +140,13 @@ const Commission = () => {
 								{data?.commissions?.length > 0 &&
 									data?.commissions?.map((item) => (
 										<TableRow key={item?._id}>
-											<TableCell className="cursor-pointer whitespace-nowrap">
-												{item?.user?.name}
+											<TableCell className="cursor-pointer whitespace-nowrap capitalize">
+												{item?.userId?.name}
 											</TableCell>
 											<TableCell>{item?.amount}</TableCell>
 											<TableCell>{item?.commissionAmount}</TableCell>
 											<TableCell>{item?.actualAmount}</TableCell>
-											<TableCell>{format(item?.date, 'MM/dd/yyyy')}</TableCell>
+											<TableCell>{format(item?.createdAt, 'MM/dd/yyyy')}</TableCell>
 											<TableCell className="text-right">
 												<Button variant="ghost" size="icon">
 													<EllipsisVertical className="h-4 w-4" />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CloseCircle } from 'iconsax-react';
 import { Dialog, DialogPanel, DialogBackdrop } from '@headlessui/react';
 import { useState } from 'react';
@@ -27,7 +27,6 @@ const formSchema = z.object({
 	hoaName: z.string().min(2, 'Hoa name must be at least 2 characters'),
 	adminName: z.string().min(2, 'Admin name must be at least 2 characters'),
 	adminEmail: z.string().email('Invalid email address'),
-	password: z.string().min(6, 'Password'),
 	totalMembers: z
 		.string()
 		.refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
@@ -37,27 +36,39 @@ const formSchema = z.object({
 const Modal = ({
 	isOpen,
 	closeModal,
+	data,
 }: {
 	isOpen: boolean;
 	closeModal: () => void;
+	data: any;
 }) => {
 	const [image, setImage] = useState<File>();
 	const [imageUrl, setImageUrl] = useState<string>();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const { tokens } = useAuth();
 	const apiUrl = import.meta.env.VITE_API_URL;
-
 	const queryClient = useQueryClient();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			hoaName: '',
-			adminName: '',
-			totalMembers: '',
-			adminEmail: '',
-			password: ''
+			hoaName: data?.name,
+			adminName: data?.adminId?.name || '',
+			totalMembers: data?.members?.length || '',
+			adminEmail: data?.adminId?.email || '',
 		},
 	});
+
+	useEffect(() => {
+		if (data) {
+			form.reset({
+				hoaName: data.name,
+				adminName: data.adminId?.name || '',
+				totalMembers: String(data.members?.length || ''),
+				adminEmail: data.adminId?.email || '',
+			});
+		}
+	}, [data]);
+	  
 
 	const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -85,12 +96,12 @@ const Modal = ({
 					Authorization: `Bearer ${tokens?.token}`,
 				},
 			};
-			return axios.post(`${apiUrl}/admins/hoas`, formData, config);
+			return axios.patch(`${apiUrl}/admins/hoas`, formData, config);
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['hoas'] });
+			queryClient.invalidateQueries({ queryKey: ['hoas', data._id] });
 			queryClient.invalidateQueries({ queryKey: ['hoas', 'dashboard'] });
-			toast.success('HOA added successfully!');
+			toast.success('HOA updated successfully!');
 			form.reset(); // Reset form after success
 			setImage(null); // Clear the image state
 			setImageUrl(null); // Clear the image state
@@ -105,6 +116,7 @@ const Modal = ({
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		setIsLoading(true);
 		try {
+			console.log('values', values);
 			// Create FormData object and append values
 			const formData = new FormData();
 			Object.entries(values).forEach(([key, value]) => {
@@ -139,7 +151,7 @@ const Modal = ({
 					<DialogPanel className="w-full max-w-2xl rounded-xl bg-white p-2 md:p-4 backdrop-blur-2xl h-[90%] overflow-y-auto overflow-hidden">
 						<Card className="border-0">
 							<CardHeader className="flex-row items-center justify-between mb-4">
-								<CardTitle className="">Add HOA</CardTitle>
+								<CardTitle className="">Edit HOA</CardTitle>
 								<Button variant="ghost" size="icon" onClick={closeModal}>
 									<CloseCircle size="32" color="#000" variant="TwoTone" />
 								</Button>
@@ -189,37 +201,6 @@ const Modal = ({
 															placeholder="appful@gmail.com"
 															{...field}
 														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name="password"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>Admin password</FormLabel>
-													<FormControl>
-														<Input
-															type="password"
-															placeholder="**** ****"
-															{...field}
-														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-
-										<FormField
-											control={form.control}
-											name="totalMembers"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>Number of members</FormLabel>
-													<FormControl>
-														<Input type="number" placeholder="0" {...field} />
 													</FormControl>
 													<FormMessage />
 												</FormItem>

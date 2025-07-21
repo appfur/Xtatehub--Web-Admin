@@ -62,7 +62,7 @@ const Payments = () => {
 								{data?.length > 0 &&
 									data?.map((item) => (
 										<TableRow key={item?._id}>
-											<TableCell className="cursor-pointer">
+											<TableCell className="cursor-pointer capitalize">
 												{item?.user?.name}
 											</TableCell>
 											<TableCell
