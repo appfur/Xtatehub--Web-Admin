@@ -27,11 +27,6 @@ const formSchema = z.object({
 	hoaName: z.string().min(2, 'Hoa name must be at least 2 characters'),
 	adminName: z.string().min(2, 'Admin name must be at least 2 characters'),
 	adminEmail: z.string().email('Invalid email address'),
-	totalMembers: z
-		.string()
-		.refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-			message: 'Total members must be a positive number',
-		}),
 });
 const Modal = ({
 	isOpen,
@@ -53,7 +48,6 @@ const Modal = ({
 		defaultValues: {
 			hoaName: data?.name,
 			adminName: data?.adminId?.name || '',
-			totalMembers: data?.members?.length || '',
 			adminEmail: data?.adminId?.email || '',
 		},
 	});
@@ -63,7 +57,6 @@ const Modal = ({
 			form.reset({
 				hoaName: data.name,
 				adminName: data.adminId?.name || '',
-				totalMembers: String(data.members?.length || ''),
 				adminEmail: data.adminId?.email || '',
 			});
 		}
@@ -122,7 +115,8 @@ const Modal = ({
 			Object.entries(values).forEach(([key, value]) => {
 				formData.append(key, value as string);
 			});
-
+			formData.append('hoaId', data._id);
+			formData.append('adminId', data.adminId._id);
 			if (image) {
 				formData.append('logo', image);
 			}
