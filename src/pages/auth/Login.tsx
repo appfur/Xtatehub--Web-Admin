@@ -52,7 +52,7 @@ const Login = () => {
 	const onSubmit = async (values: z.infer<typeof loginSchema>) => {
 		try {
 			setIsLoading(true);
-			const response = await axios.post(`${apiUrl}/auth/login`, values);
+			const response = await axios.post(`${apiUrl}/auth/admin/login`, values);
 			const { accessToken, refreshToken, user } = response.data;
 			console.log(response.data);
 			login({ token: accessToken, refreshToken }, user);
