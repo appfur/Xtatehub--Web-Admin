@@ -9,7 +9,8 @@ import {
 	Percent,
 } from 'lucide-react';
 
-export const avatarImage = 'https://xsgames.co/randomusers/assets/avatars/male/64.jpg';
+export const avatarImage =
+	'https://xsgames.co/randomusers/assets/avatars/male/64.jpg';
 
 export const topMenuLinks = [
 	{ label: 'Home', href: '/dashboard', icon: House },
@@ -23,6 +24,6 @@ export const topMenuLinks = [
 ];
 
 export const bottomMenuLinks = [
-	{ label: 'Support', href: '/support', icon: LifeBuoy },
+	// { label: 'Support', href: '/support', icon: LifeBuoy },
 	{ label: 'Setting', href: '/settings', icon: Settings },
 ];

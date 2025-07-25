@@ -69,7 +69,7 @@ const Payments = () => {
 												className=""
 												onClick={() => navigate(`/payments/${item?._id}`)}
 											>
-												{item?.amount}
+												{item?.amount?.toLocaleString()}
 											</TableCell>
 											<TableCell>
 												<span

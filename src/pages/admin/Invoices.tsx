@@ -84,7 +84,7 @@ const Invoices = () => {
 											>
 												{item?.dueId?.name}
 											</TableCell>
-											<TableCell>{item?.amount}</TableCell>
+											<TableCell>{item?.amount?.toLocaleString()}</TableCell>
 											<TableCell>{item?.dueDate}</TableCell>
 											{/* <TableCell className="whitespace-nowrap">
 												{item?.description}

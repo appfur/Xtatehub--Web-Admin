@@ -80,7 +80,9 @@ const Reports = () => {
 						</CardHeader>
 						<CardContent>
 							<div className="flex justify-between">
-								<div className="text-2xl font-bold">₦{data?.totalRevenue}</div>
+								<div className="text-2xl font-bold">
+									₦{data?.totalRevenue?.toLocaleString()}
+								</div>
 								<div className="flex bg-green-50 rounded-md items-center gap-2 px-2 py-1">
 									<TrendingUp className="h-4 w-4 text-green-500" />
 									<div className="text-green-500 text-sm mt-2">+2.5%</div>
@@ -100,7 +102,7 @@ const Reports = () => {
 						<CardContent>
 							<div className="flex justify-between">
 								<div className="text-2xl font-bold">
-									₦{data?.currentMonthRevenue}
+									₦{data?.currentMonthRevenue?.toLocaleString()}
 								</div>
 								<div className="flex bg-green-50 rounded-md items-center gap-2 px-2 py-1">
 									<TrendingUp className="h-4 w-4 text-green-500" />

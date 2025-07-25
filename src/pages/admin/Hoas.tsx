@@ -230,35 +230,35 @@ const Hoas = () => {
 							</TableHeader>
 							<TableBody>
 								{hoas?.map((hoa) => (
-									<TableRow key={hoa._id}>
+									<TableRow key={hoa?._id}>
 										<TableCell
 											className="font-medium cursor-pointer"
 											onClick={() => navigate(`/hoas/${hoa?._id}`)}
 										>
 											<div className="flex items-center gap-3">
 												<Avatar>
-													<AvatarImage src={hoa.logo.url} />
-													<AvatarFallback>{hoa.name[0]}</AvatarFallback>
+													<AvatarImage src={hoa?.logo?.url} />
+													<AvatarFallback>{hoa?.name[0]}</AvatarFallback>
 												</Avatar>
-												{hoa.name}
+												{hoa?.name}
 											</div>
 										</TableCell>
 										<TableCell>
 											<span
 												className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${
-													hoa.status === 'active'
+													hoa?.status === 'active'
 														? 'bg-green-100 text-green-800'
-														: hoa.status === 'deleted'
+														: hoa?.status === 'deleted'
 														? 'bg-red-100 text-red-800'
 														: 'bg-gray-100 text-gray-800'
 												}`}
 											>
-												{hoa.status}
+												{hoa?.status}
 											</span>
 										</TableCell>
-										<TableCell>{hoa.adminId.name}</TableCell>
+										<TableCell>{hoa?.adminId?.name}</TableCell>
 										<TableCell className="whitespace-nowrap">
-											{hoa.adminId.email}
+											{hoa?.adminId?.email}
 										</TableCell>
 										<TableCell>
 											<div className="flex items-center gap-2 relative">
@@ -287,7 +287,7 @@ const Hoas = () => {
 										<TableCell className="text-right">
 											<div className="flex justify-end gap-2">
 												<Button
-													onClick={() => handleConfirmDelete(hoa._id)}
+													onClick={() => handleConfirmDelete(hoa?._id)}
 													variant="ghost"
 													size="icon"
 												>

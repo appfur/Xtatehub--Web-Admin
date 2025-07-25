@@ -42,7 +42,7 @@ import { avatarImage } from '@/data';
 import { useNavigate } from 'react-router-dom';
 const AdminDashboard = () => {
 	const { tokens, setNotifications } = useAuth();
-		const navigate = useNavigate();
+	const navigate = useNavigate();
 	const { data } = useQuery({
 		queryKey: ['dashboard'],
 		queryFn: async () => fetchIndex(tokens?.token),
@@ -124,7 +124,9 @@ const AdminDashboard = () => {
 						</CardHeader>
 						<CardContent>
 							<div className="flex justify-between">
-								<div className="text-2xl font-bold">₦{data?.totalRevenue}</div>
+								<div className="text-2xl font-bold">
+									₦{data?.totalRevenue?.toLocaleString()}
+								</div>
 								<div className="flex bg-green-50 rounded-md items-center gap-2 px-2 py-1">
 									<TrendingUp className="h-4 w-4 text-green-500" />
 									<div className="text-green-500 text-sm mt-2">+2.5%</div>
@@ -143,7 +145,11 @@ const AdminDashboard = () => {
 						<CardHeader>
 							<div className="flex justify-between items-center">
 								<CardTitle>Commission</CardTitle>
-								<Button variant="ghost" size="icon" onClick={() => navigate('/commission')}>
+								<Button
+									variant="ghost"
+									size="icon"
+									onClick={() => navigate('/commission')}
+								>
 									<MoreHorizontal className="h-4 w-4" />
 								</Button>
 							</div>
@@ -185,7 +191,7 @@ const AdminDashboard = () => {
 													className=" rounded-full w-2 h-2 inline-block"
 													style={{ backgroundColor: color }}
 												></span>
-												<span className="ml-2">{item.name}</span>
+												<span className="ml-2">{item?.name}</span>
 											</p>
 										);
 									})}
@@ -243,12 +249,12 @@ const AdminDashboard = () => {
 									</TableHeader>
 									<TableBody>
 										{data?.topHOAs?.map((hoa) => (
-											<TableRow key={hoa._id}>
+											<TableRow key={hoa?._id}>
 												<TableCell className="font-medium">
 													<div className="flex items-center gap-3 w-full">
 														<Avatar>
-															<AvatarImage src={hoa.logo.url} />
-															<AvatarFallback>{hoa.name[0]}</AvatarFallback>
+															<AvatarImage src={hoa?.logo?.url} />
+															<AvatarFallback>{hoa?.name[0]}</AvatarFallback>
 														</Avatar>
 														<div className="w-full text-black">
 															<p className="font-medium capitalize">
@@ -263,14 +269,14 @@ const AdminDashboard = () => {
 												<TableCell>
 													<span
 														className={`px-2 py-1 rounded-full text-xs ${
-															hoa.status === 'Active'
+															hoa?.status === 'Active'
 																? 'bg-green-100 text-green-600'
-																: hoa.status === 'deleted'
+																: hoa?.status === 'deleted'
 																? 'bg-red-100 text-red-600'
 																: 'bg-gray-100 text-gray-600'
 														}`}
 													>
-														{hoa.status}
+														{hoa?.status}
 													</span>
 												</TableCell>
 												<TableCell>
@@ -284,7 +290,7 @@ const AdminDashboard = () => {
 																{hoa?.members?.map((user, index) => (
 																	<Avatar key={index}>
 																		<AvatarImage
-																			src={user.image || avatarImage}
+																			src={user?.image || avatarImage}
 																		/>
 																		<AvatarFallback>U</AvatarFallback>
 																	</Avatar>
