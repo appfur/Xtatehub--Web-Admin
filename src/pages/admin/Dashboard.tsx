@@ -125,7 +125,7 @@ const AdminDashboard = () => {
 						<CardContent>
 							<div className="flex justify-between">
 								<div className="text-2xl font-bold">
-									₦{data?.totalRevenue?.toLocaleString()}
+									₦{data?.totalevenue?.toLocaleString()}
 								</div>
 								<div className="flex bg-green-50 rounded-md items-center gap-2 px-2 py-1">
 									<TrendingUp className="h-4 w-4 text-green-500" />
